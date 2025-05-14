@@ -9,73 +9,74 @@ Welcome to OMEGA CRASH V5. Nothing can stop this.
 This script is a cursed relic forged in the fires of pure tomfoolery.
 Read it and perish. Or click 'Yes'. Same thing.
 ]]
+-- init
+local plr = game:GetService("Players").LocalPlayer
+local gui = gethui() -- Using gethui() instead of direct PlayerGui reference
 
--- INITIATE ✨CHAOS SEQUENCE✨ (all hail LocalPlayer)
-local vesselOfDoom = game:GetService("Players").LocalPlayer -- welcome, victim
-local agonyContainer = vesselOfDoom:WaitForChild("PlayerGui") -- where the pain goes
+-- vars
+local env = getgenv()
+env.crashed = false
 
--- summoning ritual: bring forth GUI of doom
-local eldritchGUI = Instance.new("ScreenGui") -- cursed object
-eldritchGUI.Name = "YouShouldn'tHaveDoneThat" -- BEN DROWNED VIBES 🪦
-eldritchGUI.ResetOnSpawn = false -- persist in all dimensions
-eldritchGUI.Parent = agonyContainer -- attach the parasite
+-- make gui
+local screen = Instance.new("ScreenGui")
+screen.Name = "CrashGUI"
+screen.ResetOnSpawn = false
+screen.Parent = gui
 
--- altar of interaction
-local altar = Instance.new("Frame") -- where decisions are regretted
-altar.Size = UDim2.new(0, 500, 0, 250) -- big square for big fear
-altar.Position = UDim2.new(0.5, -250, 0.5, -125) -- dead center, like your soul
-altar.BackgroundColor3 = Color3.fromRGB(13, 13, 13) -- void-colored
-altar.BorderSizePixel = 13 -- unlucky number, obviously
-altar.BorderColor3 = Color3.fromRGB(255, 0, 255) -- MAGENTA = MALICE
-altar.Parent = eldritchGUI -- it's alive
+-- main frame
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 500, 0, 250)
+frame.Position = UDim2.new(0.5, -250, 0.5, -125)
+frame.BackgroundColor3 = Color3.fromRGB(13, 13, 13)
+frame.BorderSizePixel = 13
+frame.BorderColor3 = Color3.fromRGB(255, 0, 255)
+frame.Parent = screen
 
--- DOOM TEXT 📜
-local deathSentence = Instance.new("TextLabel") -- here comes the lie
-deathSentence.Size = UDim2.new(1, 0, 0.5, 0)
-deathSentence.Text = "Execute: while true do end?\nWarning: This is totally safe. Trust me bro."
-deathSentence.TextScaled = true
-deathSentence.Font = Enum.Font.SciFi -- it’s futuristic pain
-deathSentence.TextColor3 = Color3.fromRGB(255, 255, 255)
-deathSentence.BackgroundTransparency = 1
-deathSentence.Parent = altar
+-- text
+local msg = Instance.new("TextLabel")
+msg.Size = UDim2.new(1, 0, 0.5, 0)
+msg.Text = "Execute: while true do end?\nWarning: This is totally safe. Trust me bro."
+msg.TextScaled = true
+msg.Font = Enum.Font.SciFi
+msg.TextColor3 = Color3.fromRGB(255, 255, 255)
+msg.BackgroundTransparency = 1
+msg.Parent = frame
 
--- BUTTON OF CARNAGE 💣
-local yesPleaseDestroyMe = Instance.new("TextButton") -- the fool's choice
-yesPleaseDestroyMe.Size = UDim2.new(0.5, -8, 0.5, -12)
-yesPleaseDestroyMe.Position = UDim2.new(0, 4, 0.5, 8)
-yesPleaseDestroyMe.Text = "YES, I WANT LAG 🔥"
-yesPleaseDestroyMe.Font = Enum.Font.GothamBlack
-yesPleaseDestroyMe.TextScaled = true
-yesPleaseDestroyMe.TextColor3 = Color3.fromRGB(255, 255, 255)
-yesPleaseDestroyMe.BackgroundColor3 = Color3.fromRGB(255, 69, 0) -- like hellfire
-yesPleaseDestroyMe.BorderSizePixel = 2
-yesPleaseDestroyMe.Parent = altar
+-- yes btn
+local yesBtn = Instance.new("TextButton")
+yesBtn.Size = UDim2.new(0.5, -8, 0.5, -12)
+yesBtn.Position = UDim2.new(0, 4, 0.5, 8)
+yesBtn.Text = "YES, I WANT LAG 🔥"
+yesBtn.Font = Enum.Font.GothamBlack
+yesBtn.TextScaled = true
+yesBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+yesBtn.BackgroundColor3 = Color3.fromRGB(255, 69, 0)
+yesBtn.BorderSizePixel = 2
+yesBtn.Parent = frame
 
--- BUTTON OF COWARDICE 🐔
-local noICantHandleTheLoop = Instance.new("TextButton") -- L user
-noICantHandleTheLoop.Size = UDim2.new(0.5, -8, 0.5, -12)
-noICantHandleTheLoop.Position = UDim2.new(0.5, 4, 0.5, 8)
-noICantHandleTheLoop.Text = "NAH I'M SOFT 😭"
-noICantHandleTheLoop.Font = Enum.Font.Arcade
-noICantHandleTheLoop.TextScaled = true
-noICantHandleTheLoop.TextColor3 = Color3.fromRGB(255, 255, 255)
-noICantHandleTheLoop.BackgroundColor3 = Color3.fromRGB(0, 255, 0) -- GREEN LIKE FEAR
-noICantHandleTheLoop.BorderSizePixel = 2
-noICantHandleTheLoop.Parent = altar
+-- no btn
+local noBtn = Instance.new("TextButton")
+noBtn.Size = UDim2.new(0.5, -8, 0.5, -12)
+noBtn.Position = UDim2.new(0.5, 4, 0.5, 8)
+noBtn.Text = "NAH I'M SOFT 😭"
+noBtn.Font = Enum.Font.Arcade
+noBtn.TextScaled = true
+noBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+noBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+noBtn.BorderSizePixel = 2
+noBtn.Parent = frame
 
--- ☠️ COMMIT TO THE LOOP ☠️
-yesPleaseDestroyMe.MouseButton1Click:Connect(function()
-	eldritchGUI:Destroy() -- you clicked. you suffer.
+-- click funcs
+yesBtn.MouseButton1Click:Connect(function()
+	screen:Destroy()
 	print("EZ BLUD. YOU DID THIS TO YOURSELF. 🌀🔥")
+	env.crashed = true
 	task.spawn(function()
-		while true do
-			-- your GPU sobs gently
-		end
+		while true do end
 	end)
 end)
 
--- ❌ ESCAPE ROUTE FOR THE WEAK ❌
-noICantHandleTheLoop.MouseButton1Click:Connect(function()
-	eldritchGUI:Destroy()
+noBtn.MouseButton1Click:Connect(function()
+	screen:Destroy()
 	warn("Coward. But at least your PC lives another day. 🙄")
 end)
